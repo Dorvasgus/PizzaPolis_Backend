@@ -10,11 +10,11 @@ namespace PizzaPolis_01.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RolController : ControllerBase
+    public class PedidoController : ControllerBase
     {
         private readonly deliveryContext context;
         private readonly IMapper mapper;
-        public RolController(deliveryContext context, IMapper mapper)
+        public PedidoController(deliveryContext context, IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
@@ -25,14 +25,14 @@ namespace PizzaPolis_01.Controllers
         {
             try
             {
-                var query = context.Rol
+                var query = context.Cliente
                 .AsQueryable();
 
                 var datosPaginacion = await query.datosPaginacion(paginacion.cantidadRegistroPorPagina);
                 var entidades = await query.Paginar(paginacion).ToListAsync();
-                var list = mapper.Map<List<RolDTO>>(entidades);
+                var list = mapper.Map<List<PedidoDTO>>(entidades);
 
-                return Ok(new ResponseListDTO<RolDTO>
+                return Ok(new ResponseListDTO<PedidoDTO>
                 {
                     cantidad = int.Parse(datosPaginacion["CantidadPaginas"]),
                     pagina = paginacion.Pagina,
@@ -45,27 +45,6 @@ namespace PizzaPolis_01.Controllers
 
                 return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
             }
-        }
-        [HttpPost]
-        public async Task<ActionResult> Post([FromBody] RolDTO insertarRolDTO)
-        {
-            try
-            {
-                var rol = mapper.Map<RolDTO>(insertarRolDTO);
-                //context.Rol.Add(rol);
-                await context.SaveChangesAsync();
-
-                /////
-                var dtoLectura = mapper.Map<RolDTO>(rol);
-                return new CreatedAtRouteResult("getAutor", new { id = rol.IdRol }, dtoLectura);
-
-            }
-            catch (Exception ex)
-            {
-
-                return BadRequest(ex.Message);
-            }
-
         }
     }
 }
