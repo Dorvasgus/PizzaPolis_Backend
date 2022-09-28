@@ -46,5 +46,26 @@ namespace PizzaPolis_01.Controllers
                 return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
             }
         }
-}
+        [HttpPost]
+        public async Task<ActionResult> Post([FromBody] RolDTO insertarRolDTO)
+        {
+            try
+            {
+                var rol = mapper.Map<RolDTO>(insertarRolDTO);
+                context.Rol.Add(rol);
+                await context.SaveChangesAsync();
+
+                /////
+                var dtoLectura = mapper.Map<RolDTO>(rol);
+                return new CreatedAtRouteResult("getAutor", new { id = rol.IdRol }, dtoLectura);
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+
+        }
+    }
 }
