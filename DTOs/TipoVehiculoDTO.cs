@@ -6,12 +6,11 @@ namespace PizzaPolis_01.DTOs
     {
         public TipoVehiculoDTO()
         {
-            Vehiculos = new HashSet<VehiculoDTO>();
+            Vehiculo = new HashSet<Vehiculo>();
         }
-        public int IdTipoVehi { get; set; }
 
-        public string Nombre { get; set; } = null!;
+        public string Nombre { get; set; }
 
-        public virtual ICollection<VehiculoDTO> Vehiculos { get; set; }
+        public virtual ICollection<Vehiculo> Vehiculo { get; set; }
     }
 }

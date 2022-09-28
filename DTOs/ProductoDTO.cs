@@ -6,13 +6,14 @@ namespace PizzaPolis_01.DTOs
     {
         public ProductoDTO()
         {
-            DetallePedidos = new HashSet<DetallePedidoDTO>();
+            DetallePedido = new HashSet<DetallePedido>();
         }
 
-        public string PizzaFamiliar { get; set; } = null!;
-        public string PizzaMediana { get; set; } = null!;
-        public string PizzaPequeña { get; set; } = null!;
+        public int Id { get; set; }
+        public string NombreProd { get; set; }
+        public string DetalleProd { get; set; }
+        public double PrecioProd { get; set; }
 
-        public virtual ICollection<DetallePedidoDTO> DetallePedidos { get; set; }
+        public virtual ICollection<DetallePedido> DetallePedido { get; set; }
     }
 }

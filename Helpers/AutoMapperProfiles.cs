@@ -14,6 +14,8 @@ namespace PizzaPolis_01.Helpers
             // mapeo general para las vehiculo
 
             CreateMap<Vehiculo, VehiculoDTO>();
+
+            CreateMap<Rol, RolDTO>();
         }
     }
 }

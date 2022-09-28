@@ -6,10 +6,11 @@ namespace PizzaPolis_01.DTOs
     {
         public int Cantidad { get; set; }
         public int SubTotal { get; set; }
-        public int TipoProducto { get; set; }
-        public string Detalles { get; set; } = null!;
+        public int IdProducto { get; set; }
+        public string Estado { get; set; }
+        public int? IdPedido { get; set; }
 
-        public virtual ProductoDTO TipoProductoNavigation { get; set; } = null!;
-        public virtual PedidoDTO Pedido { get; set; }=null!;
+        public virtual Pedido IdPedidoNavigation { get; set; }
+        public virtual Productos IdProductoNavigation { get; set; }
     }
 }

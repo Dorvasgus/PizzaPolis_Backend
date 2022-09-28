@@ -4,13 +4,16 @@ namespace PizzaPolis_01.DTOs
 {
     public class ClienteDTO
     {
-        public string Nit { get; set; } = null!;
-        public string RazonSocial { get; set; } = null!;
-        public string UserName { get; set; } = null!;
-        public string Password { get; set; } = null!;
-        public int Localidad { get; set; }
+        public ClienteDTO()
+        {
+            Pedido = new HashSet<Pedido>();
+        }
 
-        public virtual LocalidadDTO LocalidadNavigation { get; set; } = null!;
-        public virtual PersonaDTO? Persona { get; set; }
+        public string Nit { get; set; }
+        public int IdRol { get; set; }
+
+        public virtual Persona IdClienteNavigation { get; set; }
+        public virtual Rol IdRolNavigation { get; set; }
+        public virtual ICollection<Pedido> Pedido { get; set; }
     }
 }

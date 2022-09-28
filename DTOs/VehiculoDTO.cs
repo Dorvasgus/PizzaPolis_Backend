@@ -4,17 +4,13 @@ namespace PizzaPolis_01.DTOs
 {
     public class VehiculoDTO
     {
-        public VehiculoDTO()
-        {
-            Funcionarios = new HashSet<FuncionarioDTO>();
-        }
-
-        public string Patente { get; set; } = null!;
-        public string Modelo { get; set; } = null!;
+        public string Patente { get; set; }
+        public string Modelo { get; set; }
         public int TipoVehiculo { get; set; }
-        public string Licencia { get; set; } = null!;
+        public string Licencia { get; set; }
+        public int? IdRol { get; set; }
 
-        public virtual TipoVehiculoDTO TipoVehiculoNavigation { get; set; } = null!;
-        public virtual ICollection<FuncionarioDTO> Funcionarios { get; set; }
+        public virtual Rol IdRolNavigation { get; set; }
+        public virtual TipoVehiculo TipoVehiculoNavigation { get; set; }
     }
 }
