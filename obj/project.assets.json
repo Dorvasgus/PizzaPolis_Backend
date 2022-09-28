@@ -2124,11 +2124,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Universidad\\Sexto Semestre\\Programacion Web II\\PizzaPolis_01\\PizzaPolis_01.csproj",
+      "projectUniqueName": "D:\\Universidad\\Sexto Semestre\\Programacion Web II\\Respaldo\\PizzaPolis_Backend\\PizzaPolis_01.csproj",
       "projectName": "PizzaPolis_01",
-      "projectPath": "D:\\Universidad\\Sexto Semestre\\Programacion Web II\\PizzaPolis_01\\PizzaPolis_01.csproj",
+      "projectPath": "D:\\Universidad\\Sexto Semestre\\Programacion Web II\\Respaldo\\PizzaPolis_Backend\\PizzaPolis_01.csproj",
       "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-      "outputPath": "D:\\Universidad\\Sexto Semestre\\Programacion Web II\\PizzaPolis_01\\obj\\",
+      "outputPath": "D:\\Universidad\\Sexto Semestre\\Programacion Web II\\Respaldo\\PizzaPolis_Backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -2205,5 +2205,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problema al leer el archivo de caché D:\\Universidad\\Sexto Semestre\\Programacion Web II\\Respaldo\\PizzaPolis_Backend\\obj\\project.nuget.cache : After parsing a value an unexpected character was encountered: \". Path 'expectedPackageFiles[50]', line 58, position 4."
+    }
+  ]
 }
