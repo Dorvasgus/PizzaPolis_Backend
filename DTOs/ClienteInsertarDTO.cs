@@ -2,8 +2,11 @@
 
 namespace PizzaPolis_01.DTOs
 {
-    public class ClienteDTO
+    public class ClienteInsertarDTO
     {
+       
+
+        public int IdCliente { get; set; }
         public string Nit { get; set; }
         public int IdRol { get; set; }
 

@@ -142,5 +142,14 @@ namespace PizzaPolis_01.Controllers
             };
 
         }
+        [HttpDelete]
+        public async Task<int> deleteUsuario(int UsuarioID)
+        {
+            var usuario = new Usuario { Id = UsuarioID };
+            context.Remove(usuario);
+            await context.SaveChangesAsync();
+            return usuario.Id;
+
+        }
     }
 }

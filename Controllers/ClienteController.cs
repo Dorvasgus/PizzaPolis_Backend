@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using PizzaPolis_01.Data;
 using PizzaPolis_01.DTOs;
 using PizzaPolis_01.Helpers;
+using PizzaPolis_01.Models;
 
 namespace PizzaPolis_01.Controllers
 {
@@ -45,6 +46,17 @@ namespace PizzaPolis_01.Controllers
 
                 return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
             }
+
+        }
+        
+        [HttpDelete]
+        public async Task<int> deleteCliente(int ClienteId)
+        {
+            var cliente = new Cliente { IdCliente = ClienteId };
+            context.Remove(cliente);
+            await context.SaveChangesAsync();
+            return cliente.IdCliente;
+
         }
     }
 }

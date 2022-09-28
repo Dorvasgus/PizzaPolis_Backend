@@ -1,23 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\pc\\source\\repos\\PizzaPolis_Backend\\PizzaPolis_01.csproj": {}
+    "C:\\Users\\Usuario1\\Source\\Repos\\PizzaPolis_Backend\\PizzaPolis_01.csproj": {}
   },
   "projects": {
-    "C:\\Users\\pc\\source\\repos\\PizzaPolis_Backend\\PizzaPolis_01.csproj": {
+    "C:\\Users\\Usuario1\\Source\\Repos\\PizzaPolis_Backend\\PizzaPolis_01.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pc\\source\\repos\\PizzaPolis_Backend\\PizzaPolis_01.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario1\\Source\\Repos\\PizzaPolis_Backend\\PizzaPolis_01.csproj",
         "projectName": "PizzaPolis_01",
-        "projectPath": "C:\\Users\\pc\\source\\repos\\PizzaPolis_Backend\\PizzaPolis_01.csproj",
-        "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pc\\source\\repos\\PizzaPolis_Backend\\obj\\",
+        "projectPath": "C:\\Users\\Usuario1\\Source\\Repos\\PizzaPolis_Backend\\PizzaPolis_01.csproj",
+        "packagesPath": "C:\\Users\\Usuario1\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Usuario1\\Source\\Repos\\PizzaPolis_Backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Usuario1\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,7 +27,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -52,6 +52,10 @@
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[11.0.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.9, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -91,7 +95,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
