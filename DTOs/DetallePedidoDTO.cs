@@ -10,7 +10,7 @@ namespace PizzaPolis_01.DTOs
         public string Estado { get; set; }
         public int? IdPedido { get; set; }
 
-        public virtual Pedido IdPedidoNavigation { get; set; }
-        public virtual Productos IdProductoNavigation { get; set; }
+        public virtual PedidoDTO IdPedidoNavigation { get; set; }
+        public virtual ProductoDTO IdProductoNavigation { get; set; }
     }
 }

@@ -7,8 +7,6 @@ namespace PizzaPolis_01.DTOs
         public string Nit { get; set; }
         public int IdRol { get; set; }
 
-        public virtual Persona IdClienteNavigation { get; set; }
-        public virtual Rol IdRolNavigation { get; set; }
-        public virtual ICollection<Pedido> Pedido { get; set; }
+        public virtual PersonaDTO Persona { get; set; }
     }
 }

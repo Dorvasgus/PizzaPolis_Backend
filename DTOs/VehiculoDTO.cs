@@ -14,9 +14,7 @@ namespace PizzaPolis_01.DTOs
 
         public int TipoVehiculo { get; set; }
         public string? Licencia { get; set; }
-        public int? IdRol { get; set; }
 
-        public virtual Rol? IdRolNavigation { get; set; }
-        public virtual TipoVehiculo TipoVehiculoNavigation { get; set; }
+        public virtual TipoVehiculoDTO TipoVehiculoNavigation { get; set; }
     }
 }

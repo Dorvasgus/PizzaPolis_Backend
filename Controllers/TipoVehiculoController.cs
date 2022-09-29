@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -6,34 +7,35 @@ using PizzaPolis_01.Data;
 using PizzaPolis_01.DTOs;
 using PizzaPolis_01.Helpers;
 using PizzaPolis_01.Models;
+using System.Data;
 
 namespace PizzaPolis_01.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FuncionarioController : ControllerBase
+    public class TipoVehiculoController : ControllerBase
     {
         private readonly deliveryContext context;
         private readonly IMapper mapper;
-        public FuncionarioController(deliveryContext context, IMapper mapper)
+        public TipoVehiculoController(deliveryContext context, IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
         }
-        [HttpGet("paginacion")]
-
+        [HttpGet ("paginacion") ]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Get([FromQuery] PaginacionDTO paginacion)
         {
             try
             {
-                var query = context.Funcionario
+                var query = context.TipoVehiculo
                 .AsQueryable();
 
                 var datosPaginacion = await query.datosPaginacion(paginacion.cantidadRegistroPorPagina);
                 var entidades = await query.Paginar(paginacion).ToListAsync();
-                var list = mapper.Map<List<FuncionarioDTO>>(entidades);
+                var list = mapper.Map<List<TipoVehiculoDTO>>(entidades);
 
-                return Ok(new ResponseListDTO<FuncionarioDTO>
+                return Ok(new ResponseListDTO<TipoVehiculoDTO>
                 {
                     cantidad = int.Parse(datosPaginacion["CantidadPaginas"]),
                     pagina = paginacion.Pagina,
@@ -48,32 +50,52 @@ namespace PizzaPolis_01.Controllers
             }
         }
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<List<FuncionarioDTO>>> Get(int id)
+        public async Task<ActionResult<List<TipoVehiculoDTO>>> Get(int id)
         {
-            var funcionario = await context.Funcionario.FindAsync(id);
+            var tipoVehiculo = await context.TipoVehiculo.FindAsync(id);
 
-            var funcionarios = mapper.Map<List<FuncionarioDTO>>(funcionario);
+            var tipoVehiculos = mapper.Map<List<TipoVehiculoDTO>>(tipoVehiculo);
 
-            return Ok(funcionarios);
+            return Ok(tipoVehiculos);
         }
-        [HttpDelete]
-        public async Task<int> deleteFuncionario(int FuncionarioId)
+
+        [HttpPost(Name = "Insertar Tipo Vehiculo")]
+        [Authorize(Roles = "ADM")]
+        public async Task<ActionResult> Post([FromBody] insertarTipoVehiculoDTO insertarTipoVehiculoDTO)
         {
-            var funcionario = new Funcionario { IdFuncionario = FuncionarioId };
-            context.Remove(funcionario);
+            try
+            {
+                var tipoVehiculo = mapper.Map<TipoVehiculo>(insertarTipoVehiculoDTO);
+                context.TipoVehiculo.Add(tipoVehiculo);
+                await context.SaveChangesAsync();
+                return Ok("se guardo corectamente...");
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(error: ex.Message);
+            }
+
+        }
+
+        [HttpDelete]
+        public async Task<int> deleteTipoVehiculo(int TipoVehiculoID)
+        {
+            var Tvehiculo = new TipoVehiculo { IdTipoVehi = TipoVehiculoID };
+            context.Remove(Tvehiculo);
             await context.SaveChangesAsync();
-            return funcionario.IdFuncionario;
+            return Tvehiculo.IdTipoVehi;
 
         }
 
         [HttpDelete("{id:int}")]
-        [ProducesResponseType(typeof(FuncionarioDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(TipoVehiculoDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Delete(int id)
         {
             try
             {
-                context.Funcionario.Remove(new Funcionario() { IdFuncionario = id });
+                context.TipoVehiculo.Remove(new TipoVehiculo() { IdTipoVehi = id });
                 await context.SaveChangesAsync();
                 return NoContent();
 
