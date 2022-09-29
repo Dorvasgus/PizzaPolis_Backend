@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using PizzaPolis_01.Data;
 using PizzaPolis_01.DTOs;
 using PizzaPolis_01.Helpers;
+using PizzaPolis_01.Models;
 
 namespace PizzaPolis_01.Controllers
 {
@@ -46,25 +47,30 @@ namespace PizzaPolis_01.Controllers
                 return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
             }
         }
-        [HttpPost]
-        public async Task<ActionResult> Post([FromBody] RolDTO insertarRolDTO)
+        [HttpPost(Name = "Insertar Rol")]
+        public async Task<ActionResult> Post([FromBody] InsertarRolDTO insertarRolDTO)
         {
             try
             {
-                var rol = mapper.Map<RolDTO>(insertarRolDTO);
-                //context.Rol.Add(rol);
+                var rol = mapper.Map<Rol>(insertarRolDTO);
+                context.Rol.Add(rol);
                 await context.SaveChangesAsync();
-
-                /////
-                var dtoLectura = mapper.Map<RolDTO>(rol);
-                return new CreatedAtRouteResult("getAutor", new { id = rol.IdRol }, dtoLectura);
-
+                return Ok("se guardo corectamente...");
             }
             catch (Exception ex)
             {
 
-                return BadRequest(ex.Message);
+                return BadRequest(error: ex.Message);
             }
+
+        }
+        [HttpDelete]
+        public async Task<int> deleteRol(int RolID)
+        {
+            var rol = new Rol { IdRol = RolID };
+            context.Remove(rol);
+            await context.SaveChangesAsync();
+            return rol.IdRol;
 
         }
     }

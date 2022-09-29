@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using PizzaPolis_01.Data;
 using PizzaPolis_01.DTOs;
 using PizzaPolis_01.Helpers;
+using PizzaPolis_01.Models;
 
 namespace PizzaPolis_01.Controllers
 {
@@ -45,6 +46,32 @@ namespace PizzaPolis_01.Controllers
 
                 return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
             }
+        }
+        [HttpPost(Name = "Insertar Localidad")]
+        public async Task<ActionResult> Post([FromBody] LocalidadInsertar insertarLocalidadDTO)
+        {
+            try
+            {
+                var localidad = mapper.Map<Localidad>(insertarLocalidadDTO);
+               // context.Rol.Add(localidad);
+                await context.SaveChangesAsync();
+                return Ok("se guardo corectamente...");
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(error: ex.Message);
+            }
+
+        }
+        [HttpDelete]
+        public async Task<int> deleteLocalidad(int LocalidadId)
+        {
+            var localidad = new Localidad { IdLocalidad = LocalidadId };
+            context.Remove(localidad);
+            await context.SaveChangesAsync();
+            return localidad.IdLocalidad;
+
         }
     }
 }

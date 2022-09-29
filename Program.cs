@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using PizzaPolis_01.Data;
 using System.Text;
 
@@ -41,6 +43,16 @@ builder.Services.AddSwaggerGen(c =>
                   } });
 });
 
+//Inyeccion de paquete de seguridad -
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
+    AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateAudience = false,
+        ValidateIssuer = false,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["jut:key"])),
+        ClockSkew = TimeSpan.Zero,
+    });
 
 
 //Inyeccion JWT
