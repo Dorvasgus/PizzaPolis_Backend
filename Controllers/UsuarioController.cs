@@ -33,6 +33,7 @@ namespace PizzaPolis_01.Controllers
         }
 
         [HttpGet("{id:int}", Name = "GetUsuario")]
+        [Authorize(Roles = "ADM")]
         public async Task<ActionResult<UsuarioDTO>> Get(int id)
         {
             try
@@ -59,6 +60,7 @@ namespace PizzaPolis_01.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         //[Authorize(Roles = "ADM")]
         public async Task<ActionResult> Post([FromBody] UsuarioCreacionDTO creacionDTO)
         {
@@ -148,6 +150,7 @@ namespace PizzaPolis_01.Controllers
 
         }
         [HttpDelete]
+        [Authorize(Roles = "ADM")]
         public async Task<int> deleteUsuario(int UsuarioID)
         {
             var usuario = new Usuario { Id = UsuarioID };
@@ -155,6 +158,24 @@ namespace PizzaPolis_01.Controllers
             await context.SaveChangesAsync();
             return usuario.Id;
 
+        }
+
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(typeof(UsuarioDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Delete(int id)
+        {
+            try
+            {
+                context.Usuario.Remove(new Usuario() { Id = id });
+                await context.SaveChangesAsync();
+                return NoContent();
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
+            }
         }
     }
 }

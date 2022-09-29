@@ -20,7 +20,7 @@ namespace PizzaPolis_01.Controllers
             this.context = context;
             this.mapper = mapper;
         }
-        [HttpGet]
+        [HttpGet("paginacion")]
 
         public async Task<ActionResult> Get([FromQuery] PaginacionDTO paginacion)
         {
@@ -47,6 +47,15 @@ namespace PizzaPolis_01.Controllers
                 return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
             }
         }
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<List<PedidoDTO>>> Get(int id)
+        {
+            var pedido = await context.Pedido.FindAsync(id);
+
+            var pedidos = mapper.Map<List<PedidoDTO>>(pedido);
+
+            return Ok(pedidos);
+        }
         [HttpDelete]
         public async Task<int> deletePedido(int PedidoId)
         {
@@ -55,6 +64,24 @@ namespace PizzaPolis_01.Controllers
             await context.SaveChangesAsync();
             return pedido.IdPedido;
 
+        }
+
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(typeof(PedidoDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Delete(int id)
+        {
+            try
+            {
+                context.Pedido.Remove(new Pedido() { IdPedido = id });
+                await context.SaveChangesAsync();
+                return NoContent();
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
+            }
         }
     }
 }

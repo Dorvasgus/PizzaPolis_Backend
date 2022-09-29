@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,8 +21,8 @@ namespace PizzaPolis_01.Controllers
             this.context = context;
             this.mapper = mapper;
         }
-        [HttpGet]
-
+        [HttpGet("paginacion")]
+        [Authorize(Roles = "ADM")]
         public async Task<ActionResult> Get([FromQuery] PaginacionDTO paginacion)
         {
             try
@@ -47,7 +48,17 @@ namespace PizzaPolis_01.Controllers
                 return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
             }
         }
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<List<RolDTO>>> Get(int id)
+        {
+            var rol = await context.Rol.FindAsync(id);
+
+            var rols = mapper.Map<List<RolDTO>>(rol);
+
+            return Ok(rols);
+        }
         [HttpPost(Name = "Insertar Rol")]
+        [Authorize(Roles = "ADM")]
         public async Task<ActionResult> Post([FromBody] InsertarRolDTO insertarRolDTO)
         {
             try
@@ -65,6 +76,7 @@ namespace PizzaPolis_01.Controllers
 
         }
         [HttpDelete]
+        [Authorize(Roles = "ADM")]
         public async Task<int> deleteRol(int RolID)
         {
             var rol = new Rol { IdRol = RolID };
@@ -72,6 +84,24 @@ namespace PizzaPolis_01.Controllers
             await context.SaveChangesAsync();
             return rol.IdRol;
 
+        }
+
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(typeof(RolDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Delete(int id)
+        {
+            try
+            {
+                context.Rol.Remove(new Rol() { IdRol = id });
+                await context.SaveChangesAsync();
+                return NoContent();
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
+            }
         }
     }
 }

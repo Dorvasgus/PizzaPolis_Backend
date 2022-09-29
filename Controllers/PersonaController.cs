@@ -26,7 +26,7 @@ namespace PizzaPolis_01.Controllers
             this.mapper = mapper;
             this.configuration = configuration;
         }
-        [HttpGet]
+        [HttpGet("paginacion")]
 
         public async Task<ActionResult> Get([FromQuery] PaginacionDTO paginacion)
         {
@@ -79,6 +79,24 @@ namespace PizzaPolis_01.Controllers
             await context.SaveChangesAsync();
             return persona.IdPersona;
 
+        }
+
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(typeof(PersonaDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Delete(int id)
+        {
+            try
+            {
+                context.Persona.Remove(new Persona() { IdPersona = id });
+                await context.SaveChangesAsync();
+                return NoContent();
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,8 +21,8 @@ namespace PizzaPolis_01.Controllers
             this.context = context;
             this.mapper = mapper;
         }
-        [HttpGet]
-
+        [HttpGet("paginacion")]
+        [Authorize(Roles = "ADM")]
         public async Task<ActionResult> Get([FromQuery] PaginacionDTO paginacion)
         {
             try
@@ -48,8 +49,39 @@ namespace PizzaPolis_01.Controllers
             }
 
         }
-        
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<List<ClienteDTO>>> Get(int id)
+        {
+            var cliente = await context.Cliente.FindAsync(id);
+
+            var clientes = mapper.Map<List<ClienteDTO>>(cliente);
+
+            return Ok(clientes);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> Post([FromBody] ClienteInsertarDTO creacionDTO)
+        {
+            try
+            {
+                var cliente = mapper.Map<Cliente>(creacionDTO);
+                await context.Cliente.AddAsync(cliente);
+                await context.SaveChangesAsync();
+                return Ok(cliente);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+
+
         [HttpDelete]
+        [Authorize(Roles = "ADM")]
+        [Authorize(Roles = "CLI")]
         public async Task<int> deleteCliente(int ClienteId)
         {
             var cliente = new Cliente { IdCliente = ClienteId };
@@ -57,6 +89,24 @@ namespace PizzaPolis_01.Controllers
             await context.SaveChangesAsync();
             return cliente.IdCliente;
 
+        }
+
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(typeof(ClienteDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Delete(int id)
+        {
+            try
+            {
+                context.Cliente.Remove(new Cliente() { IdCliente = id });
+                await context.SaveChangesAsync();
+                return NoContent();
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
+            }
         }
     }
 }

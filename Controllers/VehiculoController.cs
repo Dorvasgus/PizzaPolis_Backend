@@ -20,7 +20,7 @@ namespace PizzaPolis_01.Controllers
             this.context = context;
             this.mapper = mapper;
         }
-        [HttpGet]
+        [HttpGet ("Paginacion")]
 
         public async Task<ActionResult> Get([FromQuery] PaginacionDTO paginacion)
         {
@@ -47,6 +47,15 @@ namespace PizzaPolis_01.Controllers
                 return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
             }
         }
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<List<VehiculoDTO>>> Get(int id)
+        {
+            var vehiculo = await context.Vehiculo.FindAsync(id);
+
+            var vehiculos = mapper.Map<List<VehiculoDTO>>(vehiculo);
+
+            return Ok(vehiculos);
+        }
         [HttpDelete]
         public async Task<int> deleteVehiculo(int VehiculoID)
         {
@@ -55,6 +64,24 @@ namespace PizzaPolis_01.Controllers
             await context.SaveChangesAsync();
             return vehiculo.IdVehiculo;
 
+        }
+
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(typeof(VehiculoDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Delete(int id)
+        {
+            try
+            {
+                context.Vehiculo.Remove(new Vehiculo() { IdVehiculo = id });
+                await context.SaveChangesAsync();
+                return NoContent();
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
+            }
         }
     }
 }
