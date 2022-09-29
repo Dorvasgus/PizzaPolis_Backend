@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ namespace PizzaPolis_01.Controllers
             this.mapper = mapper;
         }
         [HttpGet]
-
+        [Authorize(Roles = "ADM")]
         public async Task<ActionResult> Get([FromQuery] PaginacionDTO paginacion)
         {
             try
@@ -48,12 +49,13 @@ namespace PizzaPolis_01.Controllers
             }
         }
         [HttpPost(Name = "Insertar Localidad")]
-        public async Task<ActionResult> Post([FromBody] LocalidadInsertar insertarLocalidadDTO)
+        [Authorize(Roles = "CLI")]
+        public async Task<ActionResult> Post([FromBody] LocalidadInsertarDTO insertarLocalidadDTO)
         {
             try
             {
                 var localidad = mapper.Map<Localidad>(insertarLocalidadDTO);
-               // context.Rol.Add(localidad);
+                context.Localidad.Add(localidad);
                 await context.SaveChangesAsync();
                 return Ok("se guardo corectamente...");
             }

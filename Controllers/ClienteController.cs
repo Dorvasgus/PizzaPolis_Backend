@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ namespace PizzaPolis_01.Controllers
             this.mapper = mapper;
         }
         [HttpGet]
-
+        [Authorize(Roles = "ADM")]
         public async Task<ActionResult> Get([FromQuery] PaginacionDTO paginacion)
         {
             try
@@ -48,8 +49,30 @@ namespace PizzaPolis_01.Controllers
             }
 
         }
-        
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> Post([FromBody] ClienteInsertarDTO creacionDTO)
+        {
+            try
+            {
+                var cliente = mapper.Map<Cliente>(creacionDTO);
+                await context.Cliente.AddAsync(cliente);
+                await context.SaveChangesAsync();
+                return Ok(cliente);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+
+
         [HttpDelete]
+        [Authorize(Roles = "ADM")]
+        [Authorize(Roles = "CLI")]
         public async Task<int> deleteCliente(int ClienteId)
         {
             var cliente = new Cliente { IdCliente = ClienteId };

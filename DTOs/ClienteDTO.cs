@@ -9,6 +9,5 @@ namespace PizzaPolis_01.DTOs
 
         public virtual Persona IdClienteNavigation { get; set; }
         public virtual Rol IdRolNavigation { get; set; }
-        public virtual ICollection<Pedido> Pedido { get; set; }
     }
 }

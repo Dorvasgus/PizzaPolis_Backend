@@ -33,6 +33,7 @@ namespace PizzaPolis_01.Controllers
         }
 
         [HttpGet("{id:int}", Name = "GetUsuario")]
+        [Authorize(Roles = "ADM")]
         public async Task<ActionResult<UsuarioDTO>> Get(int id)
         {
             try
@@ -59,6 +60,7 @@ namespace PizzaPolis_01.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         //[Authorize(Roles = "ADM")]
         public async Task<ActionResult> Post([FromBody] UsuarioCreacionDTO creacionDTO)
         {
@@ -148,6 +150,7 @@ namespace PizzaPolis_01.Controllers
 
         }
         [HttpDelete]
+        [Authorize(Roles = "ADM")]
         public async Task<int> deleteUsuario(int UsuarioID)
         {
             var usuario = new Usuario { Id = UsuarioID };
