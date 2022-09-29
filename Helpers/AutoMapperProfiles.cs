@@ -18,6 +18,7 @@ namespace PizzaPolis_01.Helpers
 
             CreateMap<Rol, RolDTO>();
             CreateMap<Funcionario, FuncionarioDTO>();
+            CreateMap<UsuarioCreacionDTO, Usuario>();
             CreateMap<Usuario, UsuarioDTO>();
             CreateMap<Pedido, PedidoDTO>();
         }

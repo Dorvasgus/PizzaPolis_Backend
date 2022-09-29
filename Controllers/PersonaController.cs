@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,14 +12,18 @@ namespace PizzaPolis_01.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PersonaController : ControllerBase
     {
         private readonly deliveryContext context;
         private readonly IMapper mapper;
-        public PersonaController(deliveryContext context, IMapper mapper)
+        private readonly IConfiguration configuration;
+
+        public PersonaController(deliveryContext context, IMapper mapper, IConfiguration configuration)
         {
             this.context = context;
             this.mapper = mapper;
+            this.configuration = configuration;
         }
         [HttpGet]
 

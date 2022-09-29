@@ -2,11 +2,11 @@
 {
     public class UsuarioCreacionDTO
     {
-       
-        public string Nombre { get; set; } = null!;
-        public string UserName { get; set; } = null!;
-        public string Password { get; set; } = null!;
+
+        public string Usuario1 { get; set; }
+        public string Contraseña { get; set; }
         public int IdRol { get; set; }
-       
+        public bool Estado { get; set; }
+
     }
 }

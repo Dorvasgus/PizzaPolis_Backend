@@ -10,11 +10,15 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using PizzaPolis_01.Helpers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PizzaPolis_01.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    
     public class UsuarioController : ControllerBase
     {
         private readonly deliveryContext context;
@@ -55,13 +59,14 @@ namespace PizzaPolis_01.Controllers
         }
 
         [HttpPost]
+        //[Authorize(Roles = "ADM")]
         public async Task<ActionResult> Post([FromBody] UsuarioCreacionDTO creacionDTO)
         {
             try
             {
                 var usuario = mapper.Map<Usuario>(creacionDTO);
                 usuario.Estado = true;
-                usuario.Contraseña = Encrypt.GetSHA256(creacionDTO.Password);
+                usuario.Contraseña = Encrypt.GetSHA256(creacionDTO.Contraseña);
 
                 context.Usuario.Add(usuario);
                 await context.SaveChangesAsync();
@@ -80,7 +85,7 @@ namespace PizzaPolis_01.Controllers
         }
 
         [HttpPost("Login")]
-
+        [AllowAnonymous]
         public async Task<ActionResult<UserToken>> Login([FromBody] UsuarioLoginDTO loginDTO)
         {
             try
