@@ -25,7 +25,7 @@ builder.Services
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Clase2WebApi", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "PizzaPolis", Version = "v1" });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
         Name = "Authorization",
