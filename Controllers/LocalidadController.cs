@@ -49,13 +49,27 @@ namespace PizzaPolis_01.Controllers
             }
         }
         [HttpGet("{id:int}")]
+        [ProducesResponseType(typeof(LocalidadDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<LocalidadDTO>> Get(int id)
         {
-            var localidad = await context.Localidad.FindAsync(id);
+            try
+            {
+                var localidad = await context.Localidad.FindAsync(id);
 
+                if (localidad == null)
+                    return NotFound();
             var localidads = mapper.Map<LocalidadDTO>(localidad);
 
-            return Ok(localidads);
+                return Ok(localidad);
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
+
+            }
+
         }
         [HttpPost(Name = "Insertar Localidad")]
         [Authorize(Roles = "CLI")]

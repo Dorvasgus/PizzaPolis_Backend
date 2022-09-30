@@ -10,6 +10,7 @@ namespace PizzaPolis_01.Models
         public Cliente()
         {
             Pedido = new HashSet<Pedido>();
+            Personas = new HashSet<Persona>();
         }
 
         public int IdCliente { get; set; }
@@ -19,5 +20,6 @@ namespace PizzaPolis_01.Models
         public virtual Persona IdClienteNavigation { get; set; }
         public virtual Rol IdRolNavigation { get; set; }
         public virtual ICollection<Pedido> Pedido { get; set; }
+        public virtual ICollection<Persona> Personas { get; set; }
     }
 }

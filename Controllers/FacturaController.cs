@@ -49,13 +49,27 @@ namespace PizzaPolis_01.Controllers
             }
         }
         [HttpGet("{id:int}")]
+        [ProducesResponseType(typeof(FacturaDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<FacturaDTO>> Get(int id)
         {
-            var factura = await context.Factura.FindAsync(id);
+            try
+            {
+                var factura = await context.Factura.FindAsync(id);
 
+                if (factura == null)
+                    return NotFound();
             var facturas = mapper.Map<FacturaDTO>(factura);
 
-            return Ok(facturas);
+                return Ok(factura);
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
+
+            }
+
         }
         [HttpDelete]
         public async Task<int> deleteFactura(int FacturaId)
