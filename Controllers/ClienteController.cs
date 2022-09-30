@@ -49,7 +49,36 @@ namespace PizzaPolis_01.Controllers
             }
 
         }
-        
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<List<ClienteDTO>>> Get(int id)
+        {
+            var cliente = await context.Cliente.FindAsync(id);
+
+            var clientes = mapper.Map<List<ClienteDTO>>(cliente);
+
+            return Ok(clientes);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> Post([FromBody] ClienteInsertarDTO creacionDTO)
+        {
+            try
+            {
+                var cliente = mapper.Map<Cliente>(creacionDTO);
+                await context.Cliente.AddAsync(cliente);
+                await context.SaveChangesAsync();
+                return Ok(cliente);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+
+
         [HttpDelete]
         [Authorize(Roles = "ADM")]
         [Authorize(Roles = "CLI")]
