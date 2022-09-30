@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Universidad\\Sexto Semestre\\Programacion Web II\\Respaldo\\PizzaPolis_Backend\\PizzaPolis_01.csproj": {}
+    "C:\\Users\\JOSE GONZALES\\Documents\\PizzaPolis_Backend\\PizzaPolis_01.csproj": {}
   },
   "projects": {
-    "D:\\Universidad\\Sexto Semestre\\Programacion Web II\\Respaldo\\PizzaPolis_Backend\\PizzaPolis_01.csproj": {
+    "C:\\Users\\JOSE GONZALES\\Documents\\PizzaPolis_Backend\\PizzaPolis_01.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Universidad\\Sexto Semestre\\Programacion Web II\\Respaldo\\PizzaPolis_Backend\\PizzaPolis_01.csproj",
+        "projectUniqueName": "C:\\Users\\JOSE GONZALES\\Documents\\PizzaPolis_Backend\\PizzaPolis_01.csproj",
         "projectName": "PizzaPolis_01",
-        "projectPath": "D:\\Universidad\\Sexto Semestre\\Programacion Web II\\Respaldo\\PizzaPolis_Backend\\PizzaPolis_01.csproj",
-        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "D:\\Universidad\\Sexto Semestre\\Programacion Web II\\Respaldo\\PizzaPolis_Backend\\obj\\",
+        "projectPath": "C:\\Users\\JOSE GONZALES\\Documents\\PizzaPolis_Backend\\PizzaPolis_01.csproj",
+        "packagesPath": "C:\\Users\\JOSE GONZALES\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\JOSE GONZALES\\Documents\\PizzaPolis_Backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\JOSE GONZALES\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,7 +22,8 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://github.com/ErikEJ/EFCorePowerTools": {}
         },
         "frameworks": {
           "net6.0": {
@@ -43,6 +44,10 @@
             "AutoMapper": {
               "target": "Package",
               "version": "[11.0.1, )"
+            },
+            "AutoMapper.Collection": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
@@ -77,7 +82,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -89,7 +95,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

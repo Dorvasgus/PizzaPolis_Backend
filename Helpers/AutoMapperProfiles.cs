@@ -9,14 +9,17 @@ namespace PizzaPolis_01.Helpers
         public AutoMapperProfiles()
         {
             // mapeo general para las personas
-            
-            CreateMap< Persona, PersonaDTO>();
+
+            CreateMap<Persona, PersonaDTO>();
             // mapeo general para las vehiculo
 
             CreateMap<Vehiculo, VehiculoDTO>();
             CreateMap<Cliente, ClienteDTO>();
 
             CreateMap<Rol, RolDTO>();
+            //mapeo InsertarRolDTO, Rol
+            CreateMap<InsertarRolDTO, Rol>();
+            CreateMap<ActualizarClienteDTO, Cliente>();
             CreateMap<Funcionario, FuncionarioDTO>();
             CreateMap<UsuarioCreacionDTO, Usuario>();
             CreateMap<Usuario, UsuarioDTO>();
