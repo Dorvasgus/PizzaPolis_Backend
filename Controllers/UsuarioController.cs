@@ -61,7 +61,7 @@ namespace PizzaPolis_01.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        //[Authorize(Roles = "ADM")]
+        [Authorize(Roles = "ADM")]
         public async Task<ActionResult> Post([FromBody] UsuarioCreacionDTO creacionDTO)
         {
             try
