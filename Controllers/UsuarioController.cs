@@ -160,6 +160,50 @@ namespace PizzaPolis_01.Controllers
 
         }
 
+        [HttpPut("{id:int}")]
+        // [Authorize(Roles = "ADM")]
+        [ProducesResponseType(typeof(PutUsuario), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Put(int id, [FromBody] PutUsuario PutUsuario)
+        {
+            try
+            {
+                var Usuario = await context.Usuario.FindAsync(id);
+
+                if (Usuario == null)
+                {
+                    return new ResponseError(StatusCodes.Status404NotFound, "El recurso no existe").GetObjectResult();
+                }
+
+
+
+                Usuario = mapper.Map(PutUsuario, Usuario);
+                Usuario.Contraseña = Encrypt.GetSHA256(PutUsuario.Contraseña);
+
+                // context.Entry(autor).State = EntityState.Modified;
+                await context.SaveChangesAsync();
+
+
+                //return NoContent();
+                return Ok("DATOS ACTUALIZADOS CON EXITO");
+
+
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
+            }
+
+
+
+
+        }
+
+
+
+
         [HttpDelete("{id:int}")]
         [ProducesResponseType(typeof(UsuarioDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]

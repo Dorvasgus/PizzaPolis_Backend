@@ -20,8 +20,8 @@ namespace PizzaPolis_01.Controllers
             this.context = context;
             this.mapper = mapper;
         }
-        [HttpGet("paginacion")]
 
+        [HttpGet("paginacion")]
         public async Task<ActionResult> Get([FromQuery] PaginacionDTO paginacion)
         {
             try
@@ -78,6 +78,48 @@ namespace PizzaPolis_01.Controllers
             return productos.Id;
 
         }
+
+        [HttpPut("{id:int}")]
+        // [Authorize(Roles = "ADM")]
+        [ProducesResponseType(typeof(PutProducto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Put(int id, [FromBody] PutProducto PutProducto)
+        {
+            try
+            {
+                var Productos = await context.Productos.FindAsync(id);
+
+                if (Productos == null)
+                {
+                    return new ResponseError(StatusCodes.Status404NotFound, "El recurso no existe").GetObjectResult();
+                }
+
+
+
+                Productos = mapper.Map(PutProducto, Productos);
+
+
+                // context.Entry(autor).State = EntityState.Modified;
+                await context.SaveChangesAsync();
+
+
+                //return NoContent();
+                return Ok("DATOS ACTUALIZADOS CON EXITO");
+
+
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
+            }
+
+
+
+
+        }
+
 
         [HttpDelete("{id:int}")]
         [ProducesResponseType(typeof(ProductoDTO), StatusCodes.Status200OK)]

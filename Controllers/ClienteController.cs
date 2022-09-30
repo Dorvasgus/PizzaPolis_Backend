@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PizzaPolis_01.Data;
@@ -22,7 +21,7 @@ namespace PizzaPolis_01.Controllers
             this.mapper = mapper;
         }
         [HttpGet("paginacion")]
-        [Authorize(Roles = "ADM")]
+        //[Authorize(Roles = "ADM")]
         public async Task<ActionResult> Get([FromQuery] PaginacionDTO paginacion)
         {
             try
@@ -53,10 +52,10 @@ namespace PizzaPolis_01.Controllers
 
         [HttpPut("{id:int}")]
         // [Authorize(Roles = "ADM")]
-        [ProducesResponseType(typeof(ClienteDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PutCliente), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ResponseError), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> Put(int id, [FromBody] ActualizarClienteDTO ClienteInsertarDTO)
+        public async Task<ActionResult> Put(int id, [FromBody] PutCliente PutCliente)
         {
             try
             {
@@ -69,7 +68,7 @@ namespace PizzaPolis_01.Controllers
 
 
 
-                Cliente = mapper.Map(ClienteInsertarDTO, Cliente);
+                Cliente = mapper.Map(PutCliente, Cliente);
 
 
                 // context.Entry(autor).State = EntityState.Modified;
