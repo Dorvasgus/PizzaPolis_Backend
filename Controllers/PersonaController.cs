@@ -53,6 +53,28 @@ namespace PizzaPolis_01.Controllers
                 return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
             }
         }
+        [HttpGet("{id:int}")]
+        [ProducesResponseType(typeof(PersonaDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<PersonaDTO>> Get(int id)
+        {
+            try
+            {
+                var persona = await context.Persona.FindAsync(id);
+
+                if (persona == null)
+                    return NotFound();
+
+                return Ok(persona);
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
+
+            }
+
+        }
         [HttpPost(Name = "Insertar Persona")]
         public async Task<ActionResult> Post([FromBody] PersonaInsertarDTO insertarPersonDTO)
         {

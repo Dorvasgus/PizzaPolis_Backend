@@ -48,13 +48,26 @@ namespace PizzaPolis_01.Controllers
             }
         }
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<List<PedidoDTO>>> Get(int id)
+        [ProducesResponseType(typeof(PedidoDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<PedidoDTO>> Get(int id)
         {
-            var pedido = await context.Pedido.FindAsync(id);
+            try
+            {
+                var pedido = await context.Pedido.FindAsync(id);
 
-            var pedidos = mapper.Map<List<PedidoDTO>>(pedido);
+                if (pedido == null)
+                    return NotFound();
 
-            return Ok(pedidos);
+                return Ok(pedido);
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
+
+            }
+
         }
         [HttpDelete]
         public async Task<int> deletePedido(int PedidoId)

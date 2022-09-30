@@ -22,8 +22,8 @@ namespace PizzaPolis_01.Controllers
             this.mapper = mapper;
         }
         [HttpGet("paginacion")]
-        [Authorize(Roles = "ADM")]
-        public async Task<ActionResult> Get([FromQuery] PaginacionDTO paginacion)
+       // [Authorize(Roles = "ADM")]
+        public async Task<ActionResult<List<RolDTO>>> Get([FromQuery] PaginacionDTO paginacion)
         {
             try
             {
@@ -49,13 +49,28 @@ namespace PizzaPolis_01.Controllers
             }
         }
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<List<RolDTO>>> Get(int id)
+        [ProducesResponseType(typeof(RolDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<RolDTO>>Get( int id)
         {
-            var rol = await context.Rol.FindAsync(id);
+            try
+            {
+                var rol = await context.Rol.FindAsync( id);
 
-            var rols = mapper.Map<List<RolDTO>>(rol);
+                if (rol==null)
+                {
+                    return NotFound();
+                }
 
-            return Ok(rols);
+                return Ok(rol);
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
+
+            }
+            
         }
         [HttpPost(Name = "Insertar Rol")]
         [Authorize(Roles = "ADM")]

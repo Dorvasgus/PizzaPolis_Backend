@@ -4,9 +4,10 @@ namespace PizzaPolis_01.DTOs
 {
     public class ClienteDTO
     {
+       
         public string Nit { get; set; }
         public int IdRol { get; set; }
 
-        public virtual PersonaDTO Persona { get; set; }
+
     }
 }
