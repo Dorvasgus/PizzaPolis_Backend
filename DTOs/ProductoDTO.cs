@@ -7,8 +7,8 @@ namespace PizzaPolis_01.DTOs
         
 
         public int Id { get; set; }
-        public string NombreProd { get; set; }
-        public string DetalleProd { get; set; }
+        public string NombreProd { get; set; } = null!;
+        public string DetalleProd { get; set; } = null!;
         public double PrecioProd { get; set; }
     }
 }

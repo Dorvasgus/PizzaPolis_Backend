@@ -18,7 +18,10 @@ namespace PizzaPolis_01.Helpers
 
             CreateMap<Rol, RolDTO>();
             //mapeo InsertarRolDTO, Rol
-            CreateMap<InsertarRolDTO, Rol>();
+            CreateMap<PutRol, Rol>();
+            CreateMap<PutCliente, Cliente>();
+            CreateMap<PutProducto, Productos>();
+            CreateMap<PutUsuario, Usuario>();
             CreateMap<ActualizarClienteDTO, Cliente>();
             CreateMap<Funcionario, FuncionarioDTO>();
             CreateMap<UsuarioCreacionDTO, Usuario>();

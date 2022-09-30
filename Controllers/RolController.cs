@@ -49,7 +49,7 @@ namespace PizzaPolis_01.Controllers
             }
         }
         [HttpGet("{id:int}")]
-        [ProducesResponseType(typeof(RolDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PutRol), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<RolDTO>>Get( int id)
         {
@@ -98,7 +98,7 @@ namespace PizzaPolis_01.Controllers
         [ProducesResponseType(typeof(RolDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ResponseError), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> Put(int id, [FromBody] InsertarRolDTO ActualizarRolDTO)
+        public async Task<ActionResult> Put(int id, [FromBody] PutRol ActualizarRolDTO)
         {
             try
             {
