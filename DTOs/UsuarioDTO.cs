@@ -10,6 +10,5 @@ namespace PizzaPolis_01.DTOs
         public int IdRol { get; set; }
         public bool Estado { get; set; }
 
-        public virtual Rol? IdRolNavigation { get; set; }
     }
 }

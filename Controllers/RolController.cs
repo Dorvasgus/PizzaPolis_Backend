@@ -22,7 +22,7 @@ namespace PizzaPolis_01.Controllers
             this.mapper = mapper;
         }
         [HttpGet("paginacion")]
-        [Authorize(Roles = "ADM")]
+        //[Authorize(Roles = "ADM")]
         public async Task<ActionResult> Get([FromQuery] PaginacionDTO paginacion)
         {
             try
@@ -49,11 +49,11 @@ namespace PizzaPolis_01.Controllers
             }
         }
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<List<RolDTO>>> Get(int id)
+        public async Task<ActionResult<RolDTO>> Get(int id)
         {
             var rol = await context.Rol.FindAsync(id);
 
-            var rols = mapper.Map<List<RolDTO>>(rol);
+            var rols = mapper.Map<RolDTO>(rol);
 
             return Ok(rols);
         }

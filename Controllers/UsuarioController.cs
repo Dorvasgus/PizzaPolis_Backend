@@ -33,7 +33,7 @@ namespace PizzaPolis_01.Controllers
         }
 
         [HttpGet("{id:int}", Name = "GetUsuario")]
-        [Authorize(Roles = "ADM")]
+        //[Authorize(Roles = "ADM")]
         public async Task<ActionResult<UsuarioDTO>> Get(int id)
         {
             try

@@ -48,11 +48,11 @@ namespace PizzaPolis_01.Controllers
             }
         }
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<List<ProductoDTO>>> Get(int id)
+        public async Task<ActionResult<ProductoDTO>> Get(int id)
         {
             var productos = await context.Productos.FindAsync(id);
 
-            var productos1 = mapper.Map<List<ProductoDTO>>(productos);
+            var productos1 = mapper.Map<ProductoDTO>(productos);
 
             return Ok(productos1);
         }
