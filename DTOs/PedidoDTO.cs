@@ -6,8 +6,7 @@ namespace PizzaPolis_01.DTOs
     {
         public PedidoDTO()
         {
-            DetallePedido = new HashSet<DetallePedido>();
-            FacturaNavigation = new HashSet<Factura>();
+            FacturaNavigation = new HashSet<FacturaDTO>();
         }
 
         public string Numero { get; set; }
@@ -18,9 +17,6 @@ namespace PizzaPolis_01.DTOs
         public int? Localidad { get; set; }
         public int? Detalle { get; set; }
 
-        public virtual Cliente IdClienteNavigation { get; set; }
-        public virtual Localidad LocalidadNavigation { get; set; }
-        public virtual ICollection<DetallePedido> DetallePedido { get; set; }
-        public virtual ICollection<Factura> FacturaNavigation { get; set; }
+        public virtual ICollection<FacturaDTO> FacturaNavigation { get; set; }
     }
 }

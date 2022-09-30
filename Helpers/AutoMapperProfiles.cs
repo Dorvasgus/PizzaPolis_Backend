@@ -22,6 +22,7 @@ namespace PizzaPolis_01.Helpers
             CreateMap<LocalidadInsertarDTO, Localidad>();
             CreateMap<Usuario, UsuarioDTO>();
             CreateMap<Pedido, PedidoDTO>();
+            CreateMap<Factura, FacturaDTO>();
 
 
             CreateMap<ClienteInsertarDTO, Cliente>();

@@ -61,7 +61,7 @@ namespace PizzaPolis_01.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Authorize(Roles = "ADM")]
+        //[Authorize(Roles = "ADM")]
         public async Task<ActionResult> Post([FromBody] UsuarioCreacionDTO creacionDTO)
         {
             try
@@ -158,6 +158,24 @@ namespace PizzaPolis_01.Controllers
             await context.SaveChangesAsync();
             return usuario.Id;
 
+        }
+
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(typeof(UsuarioDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Delete(int id)
+        {
+            try
+            {
+                context.Usuario.Remove(new Usuario() { Id = id });
+                await context.SaveChangesAsync();
+                return NoContent();
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
+            }
         }
     }
 }

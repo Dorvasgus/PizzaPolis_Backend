@@ -8,8 +8,7 @@ namespace PizzaPolis_01.DTOs
         public int IdUsuario { get; set; }
         public int? Vehiculo { get; set; }
         public int IdRol { get; set; }
-
-        public virtual Rol IdRolNavigation { get; set; }
-        public virtual Persona Persona { get; set; }
+        public virtual PersonaDTO Persona { get; set; }
+        public virtual VehiculoDTO VehiculoDTO { get; set; }
     }
 }

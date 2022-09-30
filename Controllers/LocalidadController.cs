@@ -21,7 +21,7 @@ namespace PizzaPolis_01.Controllers
             this.context = context;
             this.mapper = mapper;
         }
-        [HttpGet]
+        [HttpGet("paginacion")]
         [Authorize(Roles = "ADM")]
         public async Task<ActionResult> Get([FromQuery] PaginacionDTO paginacion)
         {
@@ -47,6 +47,15 @@ namespace PizzaPolis_01.Controllers
 
                 return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
             }
+        }
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<List<LocalidadDTO>>> Get(int id)
+        {
+            var localidad = await context.Localidad.FindAsync(id);
+
+            var localidads = mapper.Map<List<LocalidadDTO>>(localidad);
+
+            return Ok(localidads);
         }
         [HttpPost(Name = "Insertar Localidad")]
         [Authorize(Roles = "CLI")]
@@ -74,6 +83,24 @@ namespace PizzaPolis_01.Controllers
             await context.SaveChangesAsync();
             return localidad.IdLocalidad;
 
+        }
+
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(typeof(LocalidadDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Delete(int id)
+        {
+            try
+            {
+                context.Localidad.Remove(new Localidad() { IdLocalidad = id });
+                await context.SaveChangesAsync();
+                return NoContent();
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
+            }
         }
     }
 }
