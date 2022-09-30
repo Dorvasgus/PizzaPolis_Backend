@@ -90,6 +90,49 @@ namespace PizzaPolis_01.Controllers
             }
 
         }
+
+
+        [HttpPut("{id:int}")]
+        // [Authorize(Roles = "ADM")]
+        [ProducesResponseType(typeof(RolDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Put(int id, [FromBody] InsertarRolDTO ActualizarRolDTO)
+        {
+            try
+            {
+                var Cliente = await context.Rol.FindAsync(id);
+
+                if (Cliente == null)
+                {
+                    return new ResponseError(StatusCodes.Status404NotFound, "El recurso no existe").GetObjectResult();
+                }
+
+
+
+                Cliente = mapper.Map(ActualizarRolDTO, Cliente);
+
+
+                // context.Entry(autor).State = EntityState.Modified;
+                await context.SaveChangesAsync();
+
+
+                //return NoContent();
+                return Ok("DATOS ACTUALIZADOS CON EXITO");
+
+
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
+            }
+
+
+
+
+        }
+
         [HttpDelete]
         [Authorize(Roles = "ADM")]
         public async Task<int> deleteRol(int RolID)
