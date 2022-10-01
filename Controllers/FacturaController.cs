@@ -71,6 +71,47 @@ namespace PizzaPolis_01.Controllers
             }
 
         }
+
+        [HttpPut("{id:int}")]
+        // [Authorize(Roles = "ADM")]
+        [ProducesResponseType(typeof(PutFacturaDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Put(int id, [FromBody] PutFacturaDTO PutFacturaDTO)
+        {
+            try
+            {
+                var Factura = await context.Factura.FindAsync(id);
+
+                if (Factura == null)
+                {
+                    return new ResponseError(StatusCodes.Status404NotFound, "El recurso no existe").GetObjectResult();
+                }
+
+
+
+                Factura = mapper.Map(PutFacturaDTO, Factura);
+
+
+                // context.Entry(autor).State = EntityState.Modified;
+                await context.SaveChangesAsync();
+
+
+                //return NoContent();
+                return Ok("DATOS ACTUALIZADOS CON EXITO");
+
+
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
+            }
+
+
+
+
+        }
         [HttpDelete]
         public async Task<int> deleteFactura(int FacturaId)
         {

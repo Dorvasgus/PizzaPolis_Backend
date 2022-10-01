@@ -60,7 +60,7 @@ namespace PizzaPolis_01.Controllers
 
                 if (tipo == null)
                     return NotFound();
-            var tipoVehiculos = mapper.Map<TipoVehiculoDTO>(tipoVehiculo);
+            var tipoVehiculos = mapper.Map<TipoVehiculoDTO>(tipo);
 
                 return Ok(tipo);
             }
@@ -91,7 +91,46 @@ namespace PizzaPolis_01.Controllers
             }
 
         }
+        [HttpPut("{id:int}")]
+        // [Authorize(Roles = "ADM")]
+        [ProducesResponseType(typeof(PutTipoVDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Put(int id, [FromBody] PutTipoVDTO PutTipoVDTO)
+        {
+            try
+            {
+                var TipoVehiculo = await context.TipoVehiculo.FindAsync(id);
 
+                if (TipoVehiculo == null)
+                {
+                    return new ResponseError(StatusCodes.Status404NotFound, "El recurso no existe").GetObjectResult();
+                }
+
+
+
+                TipoVehiculo = mapper.Map(PutTipoVDTO, TipoVehiculo);
+
+
+                // context.Entry(autor).State = EntityState.Modified;
+                await context.SaveChangesAsync();
+
+
+                //return NoContent();
+                return Ok("DATOS ACTUALIZADOS CON EXITO");
+
+
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
+            }
+
+
+
+
+        }
         [HttpDelete]
         public async Task<int> deleteTipoVehiculo(int TipoVehiculoID)
         {

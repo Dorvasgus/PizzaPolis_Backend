@@ -70,6 +70,46 @@ namespace PizzaPolis_01.Controllers
             }
 
         }
+        [HttpPut("{id:int}")]
+        // [Authorize(Roles = "ADM")]
+        [ProducesResponseType(typeof(PutVehiculoDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Put(int id, [FromBody] PutVehiculoDTO PutVehiculoDTO)
+        {
+            try
+            {
+                var Vehiculo = await context.Vehiculo.FindAsync(id);
+
+                if (Vehiculo == null)
+                {
+                    return new ResponseError(StatusCodes.Status404NotFound, "El recurso no existe").GetObjectResult();
+                }
+
+
+
+                Vehiculo = mapper.Map(PutVehiculoDTO, Vehiculo);
+
+
+                // context.Entry(autor).State = EntityState.Modified;
+                await context.SaveChangesAsync();
+
+
+                //return NoContent();
+                return Ok("DATOS ACTUALIZADOS CON EXITO");
+
+
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
+            }
+
+
+
+
+        }
         [HttpDelete]
         public async Task<int> deleteVehiculo(int VehiculoID)
         {

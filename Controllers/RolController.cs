@@ -61,7 +61,7 @@ namespace PizzaPolis_01.Controllers
                 {
                     return NotFound();
                 }
-            var rols = mapper.Map<RolDTO>(rol);
+                
 
                 return Ok(rol);
             }
@@ -95,7 +95,7 @@ namespace PizzaPolis_01.Controllers
 
         [HttpPut("{id:int}")]
         // [Authorize(Roles = "ADM")]
-        [ProducesResponseType(typeof(RolDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ResponseError), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Put(int id, [FromBody] PutRol ActualizarRolDTO)
@@ -119,7 +119,7 @@ namespace PizzaPolis_01.Controllers
 
 
                 //return NoContent();
-                return Ok("DATOS ACTUALIZADOS CON EXITO");
+                return NoContent();
 
 
             }

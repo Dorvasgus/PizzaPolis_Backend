@@ -10,6 +10,5 @@ namespace PizzaPolis_01.DTOs
         public string Nit { get; set; }
         public int? IdPedido { get; set; }
 
-        public virtual PedidoDTO IdPedidoNavigation { get; set; }
     }
 }

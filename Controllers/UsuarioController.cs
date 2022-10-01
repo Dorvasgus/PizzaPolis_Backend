@@ -17,8 +17,8 @@ namespace PizzaPolis_01.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
     public class UsuarioController : ControllerBase
     {
         private readonly deliveryContext context;
@@ -33,7 +33,7 @@ namespace PizzaPolis_01.Controllers
         }
 
         [HttpGet("{id:int}", Name = "GetUsuario")]
-        //[Authorize(Roles = "ADM")]
+        [Authorize(Roles = "ADM")]
         public async Task<ActionResult<UsuarioDTO>> Get(int id)
         {
             try
@@ -61,7 +61,7 @@ namespace PizzaPolis_01.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        //[Authorize(Roles = "ADM")]
+        [Authorize(Roles = "ADM")]
         public async Task<ActionResult> Post([FromBody] UsuarioCreacionDTO creacionDTO)
         {
             try
@@ -161,7 +161,7 @@ namespace PizzaPolis_01.Controllers
         }
 
         [HttpPut("{id:int}")]
-        // [Authorize(Roles = "ADM")]
+        [Authorize(Roles = "ADM")]
         [ProducesResponseType(typeof(PutUsuario), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ResponseError), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]

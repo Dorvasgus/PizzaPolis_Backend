@@ -259,3 +259,4 @@ C:\Users\JOSE GONZALES\Documents\PizzaPolis_Backend\obj\Debug\net6.0\PizzaPolis_
 C:\Users\JOSE GONZALES\Documents\PizzaPolis_Backend\obj\Debug\net6.0\ref\PizzaPolis_01.dll
 C:\Users\Usuario1\Source\Repos\PizzaPolis_Backend\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\pc\source\repos\PizzaPolis_Backend\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Universidad\Sexto Semestre\Programacion Web II\Respaldo\PizzaPolis_Backend\bin\Debug\net6.0\AutoMapper.Collection.dll
