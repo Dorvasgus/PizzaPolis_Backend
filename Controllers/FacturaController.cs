@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,12 @@ namespace PizzaPolis_01.Controllers
             this.context = context;
             this.mapper = mapper;
         }
+
+
+       
+
+
+
         [HttpGet("paginacion")]
 
         public async Task<ActionResult> Get([FromQuery] PaginacionDTO paginacion)
@@ -71,6 +78,25 @@ namespace PizzaPolis_01.Controllers
             }
 
         }
+
+        [HttpPost]
+        [Authorize(Roles = "CJN")]
+        public async Task<ActionResult> Post([FromBody] FacturaInsertarDTO insertFactDTO)
+        {
+            try
+            {
+                var factura = mapper.Map<Factura>(insertFactDTO);
+                await context.Factura.AddAsync(factura);
+                await context.SaveChangesAsync();
+                return Ok(factura);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
 
         [HttpPut("{id:int}")]
         // [Authorize(Roles = "ADM")]

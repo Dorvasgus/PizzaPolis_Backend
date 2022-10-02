@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -71,7 +72,7 @@ namespace PizzaPolis_01.Controllers
 
         }
         [HttpPut("{id:int}")]
-        // [Authorize(Roles = "ADM")]
+        [Authorize(Roles = "ADM")]
         [ProducesResponseType(typeof(PutVehiculoDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ResponseError), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
@@ -105,11 +106,27 @@ namespace PizzaPolis_01.Controllers
 
                 return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
             }
-
-
-
-
         }
+
+        [HttpPost]
+        [Authorize(Roles = "ADM")]
+        public async Task<ActionResult> Post([FromBody] InsertarVehiculoDTO insertVhDTO)
+        {
+            try
+            {
+                var vehiculo = mapper.Map<Vehiculo>(insertVhDTO);
+                await context.Vehiculo.AddAsync(vehiculo);
+                await context.SaveChangesAsync();
+                return Ok(vehiculo);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+
         [HttpDelete]
         public async Task<int> deleteVehiculo(int VehiculoID)
         {

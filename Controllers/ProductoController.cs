@@ -101,6 +101,7 @@
 //}
 
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -216,12 +217,25 @@ namespace PizzaPolis_01.Controllers
 
                 return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
             }
-
-
-
-
         }
 
+
+        [HttpPost]
+        //[Authorize(Roles = "ADM")]
+        public async Task<ActionResult> Post([FromBody] InsertarProductoDTO insertPDTO)
+        {
+            try
+            {
+                var producto = mapper.Map<Productos>(insertPDTO);
+                await context.Productos.AddAsync(producto);
+                await context.SaveChangesAsync();
+                return Ok(producto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [HttpDelete("{id:int}")]
         [ProducesResponseType(typeof(ProductoDTO), StatusCodes.Status200OK)]

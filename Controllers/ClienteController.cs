@@ -51,7 +51,7 @@ namespace PizzaPolis_01.Controllers
 
 
         [HttpPut("{id:int}")]
-        // [Authorize(Roles = "ADM")]
+        [Authorize(Roles = "ADM")]
         [ProducesResponseType(typeof(PutCliente), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ResponseError), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]

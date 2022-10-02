@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -106,11 +107,30 @@ namespace PizzaPolis_01.Controllers
 
                 return new ResponseError(StatusCodes.Status400BadRequest, ex.Message).GetObjectResult();
             }
+        }
 
+        [HttpPost(Name = "Insertar Funcionario")]
+        [Authorize(Roles = "ADM")]
+        public async Task<ActionResult> Post([FromBody] InsertarFuncionarioDTO insertarFDTO)
+        {
+            try
+            {
+                var funcionario = mapper.Map<Funcionario>(insertarFDTO);
+                context.Funcionario.Add(funcionario);
+                await context.SaveChangesAsync();
+                return Ok("se guardo corectamente...");
+            }
+            catch (Exception ex)
+            {
 
-
+                return BadRequest(error: ex.Message);
+            }
 
         }
+
+
+
+
         [HttpDelete]
         public async Task<int> deleteFuncionario(int FuncionarioId)
         {

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -70,6 +71,26 @@ namespace PizzaPolis_01.Controllers
             }
 
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> Post([FromBody] PedidoInsertarDTO creacionPedDTO)
+        {
+            try
+            {
+                var pedido = mapper.Map<Pedido>(creacionPedDTO);
+                await context.Pedido.AddAsync(pedido);
+                await context.SaveChangesAsync();
+                return Ok(pedido);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+
         [HttpPut("{id:int}")]
         // [Authorize(Roles = "ADM")]
         [ProducesResponseType(typeof(PutPedido), StatusCodes.Status200OK)]

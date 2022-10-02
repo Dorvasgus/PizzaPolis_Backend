@@ -32,6 +32,13 @@ namespace PizzaPolis_01.Helpers
             CreateMap<ActualizarClienteDTO, Cliente>();
             CreateMap<Funcionario, FuncionarioDTO>();
             CreateMap<UsuarioCreacionDTO, Usuario>();
+
+            CreateMap<InsertarProductoDTO, Productos>();
+            CreateMap<InsertarVehiculoDTO,Vehiculo> ();
+            CreateMap<FacturaInsertarDTO, Factura> ();
+            CreateMap<PedidoInsertarDTO, Pedido> ();
+            CreateMap<InsertarVehiculoDTO, Funcionario> ();
+
             CreateMap<LocalidadInsertarDTO, Localidad>();
             CreateMap<Usuario, UsuarioDTO>();
             CreateMap<Pedido, PedidoDTO>();

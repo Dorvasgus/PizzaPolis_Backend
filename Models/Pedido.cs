@@ -14,7 +14,6 @@ namespace PizzaPolis_01.Models
         }
 
         public int IdPedido { get; set; }
-        public string Numero { get; set; }
         public DateTime? FechaHoraCreacion { get; set; }
         public DateTime? FechaHoraEntrega { get; set; }
         public int IdCliente { get; set; }
