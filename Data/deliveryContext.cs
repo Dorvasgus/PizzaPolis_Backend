@@ -165,7 +165,7 @@ namespace PizzaPolis_01.Data
 
                 entity.Property(e => e.IdCliente).HasColumnName("idCliente");
 
-                entity.Property(e => e.Numero).HasMaxLength(50);
+                //entity.Property(e => e.Numero).HasMaxLength(50);
 
                 entity.HasOne(d => d.IdClienteNavigation)
                     .WithMany(p => p.Pedido)

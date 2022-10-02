@@ -80,7 +80,7 @@ namespace PizzaPolis_01.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "CJN")]
+        //[Authorize(Roles = "CJN")]
         public async Task<ActionResult> Post([FromBody] FacturaInsertarDTO insertFactDTO)
         {
             try
