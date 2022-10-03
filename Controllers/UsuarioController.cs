@@ -17,7 +17,7 @@ namespace PizzaPolis_01.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 
     public class UsuarioController : ControllerBase
     {
@@ -61,7 +61,10 @@ namespace PizzaPolis_01.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Authorize(Roles = "ADM")]
+        [ProducesResponseType(typeof(UsuarioCreacionDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
+        //[Authorize(Roles = "ADM")]
         public async Task<ActionResult> Post([FromBody] UsuarioCreacionDTO creacionDTO)
         {
             try
@@ -93,26 +96,17 @@ namespace PizzaPolis_01.Controllers
             try
             {
                 var pass = Encrypt.GetSHA256(loginDTO.Password);
-
                 var usuario = await context.Usuario
                     .FirstOrDefaultAsync(x => x.Usuario1 == loginDTO.UserName && x.Contraseña == pass && x.Estado);
                 if (usuario == null)
                     return BadRequest("El usuario ò contraseña ingresada son incorrectas");
-
                 var userdto = mapper.Map<UsuarioDTO>(usuario);
 
                 var token = ConstruirToken(userdto);
-
-
                 return Ok(token);
-
-
-
-
             }
             catch (Exception ex)
             {
-
                 return BadRequest(ex.Message);
             }
 

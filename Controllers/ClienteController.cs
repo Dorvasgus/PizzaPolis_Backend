@@ -123,6 +123,7 @@ namespace PizzaPolis_01.Controllers
             try
             {
                 var cliente = mapper.Map<Cliente>(creacionDTO);
+                cliente.IdRol = 2;
                 await context.Cliente.AddAsync(cliente);
                 await context.SaveChangesAsync();
                 return Ok(cliente);
@@ -136,17 +137,17 @@ namespace PizzaPolis_01.Controllers
 
 
 
-        [HttpDelete]
-        [Authorize(Roles = "ADM")]
-        [Authorize(Roles = "CLI")]
-        public async Task<int> deleteCliente(int ClienteId)
-        {
-            var cliente = new Cliente { IdCliente = ClienteId };
-            context.Remove(cliente);
-            await context.SaveChangesAsync();
-            return cliente.IdCliente;
+        //[HttpDelete]
+        //[Authorize(Roles = "ADM")]
+        //[Authorize(Roles = "CLI")]
+        //public async Task<int> deleteCliente(int ClienteId)
+        //{
+        //    var cliente = new Cliente { IdCliente = ClienteId };
+        //    context.Remove(cliente);
+        //    await context.SaveChangesAsync();
+        //    return cliente.IdCliente;
 
-        }
+        //}
 
         [HttpDelete("{id:int}")]
         [ProducesResponseType(typeof(ClienteDTO), StatusCodes.Status200OK)]

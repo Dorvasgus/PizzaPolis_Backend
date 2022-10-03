@@ -15,6 +15,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program));
+
+//agregando la configuracion de cors
+builder.Services.AddCors(o => o.AddPolicy("corsApp", builder =>
+{
+    builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+}));
+
+
 //inyeccion de la base de datos
 builder.Services
     .AddDbContext<deliveryContext>
@@ -81,6 +89,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("corsApp");
 
 app.UseHttpsRedirection();
 

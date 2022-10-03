@@ -13,7 +13,7 @@ namespace PizzaPolis_01.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PersonaController : ControllerBase
     {
         private readonly deliveryContext context;
@@ -76,6 +76,7 @@ namespace PizzaPolis_01.Controllers
 
         }
         [HttpPost(Name = "Insertar Persona")]
+        [Authorize(Roles = "ADM")]
         public async Task<ActionResult> Post([FromBody] PersonaInsertarDTO insertarPersonDTO)
         {
             try
